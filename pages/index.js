@@ -3,6 +3,7 @@ import classNames from "classnames";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Form } from "../components";
+import FormProvider from "../components/Form/utils/FormProvider";
 
 export default function Home() {
   const [alive, setAlive] = useState(false);
@@ -33,7 +34,7 @@ export default function Home() {
       </Head>
 
       <header className="flex justify-center">
-        <div className="w-[400px] border-l-2 pl-8 border-blue-400 my-8">
+        <div className="border-l-2 pl-8 border-blue-400 my-8">
           <h1 className="text-3xl font-bold">Doação de computadores</h1>
 
           <h1 className="text-3xl font-bold text-blue-400">usados</h1>
@@ -41,7 +42,7 @@ export default function Home() {
       </header>
 
       <main className="flex flex-grow justify-center">
-        <div className="w-[400px]">
+        <div className="w-8/12 mx-auto">
           <p className="mt-4 font-bold text-right">
             api{" "}
             <span
@@ -54,7 +55,9 @@ export default function Home() {
             </span>
           </p>
 
-          <Form />
+          <FormProvider>
+            <Form />
+          </FormProvider>
         </div>
       </main>
     </div>
