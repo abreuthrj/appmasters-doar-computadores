@@ -2,6 +2,7 @@ import axios from "axios";
 import classNames from "classnames";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { Form } from "../components";
 
 export default function Home() {
   const [alive, setAlive] = useState(false);
@@ -24,29 +25,37 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="h-full">
+    <div className="flex flex-col h-full">
       <Head>
         <title>Doação de Computadores</title>
         <meta name="description" content="Doação de computadores usados" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center h-full">
-        <h1 className="text-center text-4xl font-bold">
-          Doação de computadores usados
-        </h1>
+      <header className="flex justify-center">
+        <div className="w-[400px] border-l-2 pl-8 border-blue-400 my-8">
+          <h1 className="text-3xl font-bold">Doação de computadores</h1>
 
-        <p className="text-2xl my-4">
-          API{" "}
-          <span
-            className={classNames({
-              "text-green-400": alive,
-              "text-red-500": !alive,
-            })}
-          >
-            {alive ? "online" : "offline"}
-          </span>
-        </p>
+          <h1 className="text-3xl font-bold text-blue-400">usados</h1>
+        </div>
+      </header>
+
+      <main className="flex flex-grow justify-center">
+        <div className="w-[400px]">
+          <p className="mt-4 font-bold text-right">
+            api{" "}
+            <span
+              className={classNames({
+                "text-green-400": alive,
+                "text-red-500": !alive,
+              })}
+            >
+              {alive ? "online" : "offline"}
+            </span>
+          </p>
+
+          <Form />
+        </div>
       </main>
     </div>
   );
