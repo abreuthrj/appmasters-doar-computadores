@@ -1,19 +1,19 @@
-import axios from "axios";
 import classNames from "classnames";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Form } from "../components";
 import FormProvider from "../components/Form/utils/FormProvider";
+import Image from "next/image";
+import { apiFetchStatus } from "../store/api";
 
 export default function Home() {
   const [alive, setAlive] = useState(false);
 
+  // Setup listeners
   useEffect(() => {
     const fetchApi = async () => {
       try {
-        const { data } = await axios.get(
-          "https://doar-computador-api.herokuapp.com"
-        );
+        const { data } = await apiFetchStatus();
         setAlive(data.alive);
 
         console.log(data);
@@ -33,11 +33,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="flex justify-center">
-        <div className="border-l-2 pl-8 border-blue-400 my-8">
-          <h1 className="text-3xl font-bold">Doação de computadores</h1>
+      <header className="flex flex-wrap justify-center">
+        <div className="w-full bg-white flex items-center justify-center mb-14 pt-1">
+          <Image src={require("../assets/logo.png")} width={48} height={48} />
+        </div>
 
-          <h1 className="text-3xl font-bold text-blue-400">usados</h1>
+        <div className="my-6 flex flex-col items-center">
+          <span className="block border-b-2 border-blue-400 mb-4 w-32 rounded-full"></span>
+
+          <h1 className="text-3xl font-bold">Doação de computadores</h1>
+          <h1 className="text-4xl font-bold text-blue-400 text-right w-full">
+            usados
+          </h1>
         </div>
       </header>
 

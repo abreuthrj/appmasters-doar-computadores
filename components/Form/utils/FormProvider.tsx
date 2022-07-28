@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-
-export type DeviceType = {
-  type: string;
-  condition: string;
-};
+import { ApiFormDeviceType } from "../../../store/types";
 
 export type FormType = {
   name: string;
@@ -26,8 +22,8 @@ export type FormType = {
   setComplement: (complement: string) => void;
   neighborhood: string;
   setNeighborhood: (neighborhood: string) => void;
-  devices: DeviceType[];
-  setDevices: (devices: DeviceType[]) => void;
+  devices: ApiFormDeviceType[];
+  setDevices: (devices: ApiFormDeviceType[]) => void;
 };
 
 export const FormContext = React.createContext<FormType | null>(null);
