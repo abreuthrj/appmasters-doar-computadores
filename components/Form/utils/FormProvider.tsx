@@ -28,7 +28,11 @@ export type FormType = {
 
 export const FormContext = React.createContext<FormType | null>(null);
 
-export default function FormProvider(props: { children: React.ReactNode }) {
+export default function FormProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -68,7 +72,7 @@ export default function FormProvider(props: { children: React.ReactNode }) {
         setDevices,
       }}
     >
-      {props.children}
+      {children}
     </FormContext.Provider>
   );
 }

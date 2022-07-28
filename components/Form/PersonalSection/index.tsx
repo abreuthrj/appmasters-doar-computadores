@@ -1,26 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "../../../node_modules/axios/index";
 import classNames from "../../../node_modules/classnames/index";
+import { ZIPRequestResponse } from "../../../store/types";
 import useForm from "../utils/useForm";
-
-export type ZIPRequestResponse = {
-  cep: string;
-  logradouro: string;
-  complemento: string;
-  bairro: string;
-  localidade: string;
-  uf: string;
-  ibge: string;
-  gia: string;
-  ddd: string;
-  siafi: string;
-};
 
 export default function PersonalSection() {
   const form = useForm();
   const [loadingZip, setLoadingZip] = useState(false);
   const numberRef = useRef(null);
 
+  // Setup static functions
   const fetchCep = async () => {
     try {
       setLoadingZip(true);
@@ -36,13 +25,17 @@ export default function PersonalSection() {
 
       numberRef.current?.focus();
     } catch (err) {
+      console.log(err);
     } finally {
       setLoadingZip(false);
     }
   };
 
+  // Setup handlers
+  const 
+
+  // Setup listeners
   useEffect(() => {
-    console.log("Changed zip");
     if (form.zip.length == 8) fetchCep();
   }, [form.zip]);
 
@@ -54,28 +47,28 @@ export default function PersonalSection() {
           name="name"
           value={form.name}
           onChange={(evt) => form.setName(evt.target.value)}
-          className="p-3 bg-transparent border rounded-md outline-none text-gray-800"
+          className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
         />
         <input
           placeholder="E-mail"
           name="email"
           value={form.email}
           onChange={(evt) => form.setEmail(evt.target.value)}
-          className="p-3 bg-transparent border rounded-md outline-none text-gray-800"
+          className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
         />
         <input
           placeholder="Telefone"
           name="phone"
           value={form.phone}
           onChange={(evt) => form.setPhone(evt.target.value)}
-          className="p-3 bg-transparent border rounded-md outline-none text-gray-800"
+          className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
         />
       </div>
 
       <span className="border-b my-8"></span>
 
       <div className="flex flex-wrap gap-2">
-        <div className="flex w-full gap-2">
+        <div className="flex w-full gap-2 flex-wrap">
           <label className="relative flex items-center">
             <input
               placeholder="CEP"
@@ -96,14 +89,14 @@ export default function PersonalSection() {
             onChange={(evt) => form.setCity(evt.target.value)}
             disabled={loadingZip}
             className={classNames({
-              "p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full":
+              "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
                 true,
               "bg-gray-100": loadingZip,
             })}
           />
         </div>
 
-        <div className="flex w-full gap-2">
+        <div className="flex w-full gap-2 flex-wrap">
           <input
             placeholder="Estado"
             name="state"
@@ -123,14 +116,14 @@ export default function PersonalSection() {
             onChange={(evt) => form.setAddress(evt.target.value)}
             disabled={loadingZip}
             className={classNames({
-              "p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full":
+              "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
                 true,
               "bg-gray-100": loadingZip,
             })}
           />
         </div>
 
-        <div className="flex w-full gap-2">
+        <div className="flex w-full gap-2 flex-wrap">
           <input
             placeholder="Número"
             name="number"
@@ -144,7 +137,7 @@ export default function PersonalSection() {
             name="complement"
             value={form.complement}
             onChange={(evt) => form.setComplement(evt.target.value)}
-            className="p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full"
+            className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
           />
         </div>
 
@@ -155,7 +148,7 @@ export default function PersonalSection() {
           onChange={(evt) => form.setNeighborhood(evt.target.value)}
           disabled={loadingZip}
           className={classNames({
-            "p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full":
+            "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
               true,
             "bg-gray-100": loadingZip,
           })}

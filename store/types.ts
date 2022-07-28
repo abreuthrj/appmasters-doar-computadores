@@ -23,3 +23,16 @@ export type ApiFormRequestType = {
 };
 
 export type ApiFormResponseType = {};
+
+export type ZIPRequestResponse = {
+  cep: string;
+  logradouro: string;
+  complemento: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+  ibge: string;
+  gia: string;
+  ddd: string;
+  siafi: string;
+};
