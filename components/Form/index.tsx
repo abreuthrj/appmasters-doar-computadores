@@ -3,22 +3,60 @@ import DeviceSection from "./DeviceSection/index";
 import PersonalSection from "./PersonalSection/index";
 import useForm from "./utils/useForm";
 import classNames from "classnames";
-import axios from "axios";
 import { apiPostForm } from "../../store/api";
+import { showSnackAction } from "../../store/reducers/App";
+import { useStoreDispatch } from "../../store/store";
 
 export type FormProps = {};
 
 export default function Form(props: FormProps) {
-  const form = useForm();
+  const [form, setForm] = useForm();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const dispatch = useStoreDispatch();
+
+  // Setup handlers
+  const handleFormValidation = (): boolean => {
+    if (!form.name) {
+      setForm((state) => ({
+        ...state,
+        validationError: { ...state.validationError, name: true },
+      }));
+
+      return false;
+    }
+
+    if (!form.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+      setForm((state) => ({
+        ...state,
+        validationError: { ...state.validationError, email: true },
+      }));
+
+      return false;
+    }
+
+    if (!form.phone.match(/[0-9]{10,11}/g)) {
+      setForm((state) => ({
+        ...state,
+        validationError: { ...state.validationError, phone: true },
+      }));
+
+      return false;
+    }
+
+    return true;
+  };
 
   const handleFormSubmit: FormEventHandler = async (evt) => {
     evt.preventDefault();
 
-    if (step < 2) return setStep(step + 1);
+    if (step < 2) {
+      if (handleFormValidation()) setStep(step + 1);
+      return;
+    }
 
-    const apiFields = {
+    // Mount api body
+    const apiBody = {
       name: form.name,
       email: form.email,
       phone: form.phone,
@@ -33,15 +71,27 @@ export default function Form(props: FormProps) {
       devices: form.devices,
     };
 
-    console.log(apiFields);
+    console.log(apiBody);
 
     try {
       setLoading(true);
 
-      const { data } = await apiPostForm(apiFields);
+      const { data } = await apiPostForm(apiBody);
       console.log(data);
+
+      dispatch(
+        showSnackAction({
+          text: "Formulário enviado com sucesso!",
+        })
+      );
     } catch (err) {
       console.log(err);
+      dispatch(
+        showSnackAction({
+          text: "Ocorreu um problema! Tente novamente",
+          type: "error",
+        })
+      );
     } finally {
       setLoading(false);
     }

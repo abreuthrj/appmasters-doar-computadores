@@ -1,11 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  FocusEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import axios from "../../../node_modules/axios/index";
 import classNames from "../../../node_modules/classnames/index";
 import { ZIPRequestResponse } from "../../../store/types";
 import useForm from "../utils/useForm";
 
 export default function PersonalSection() {
-  const form = useForm();
+  const [form, setForm] = useForm();
   const [loadingZip, setLoadingZip] = useState(false);
   const numberRef = useRef(null);
 
@@ -18,10 +25,13 @@ export default function PersonalSection() {
         `https://viacep.com.br/ws/${form.zip}/json/`
       );
 
-      form.setAddress(data.logradouro);
-      form.setCity(data.localidade);
-      form.setState(data.uf);
-      form.setNeighborhood(data.bairro);
+      setForm((state) => ({
+        ...state,
+        address: data.logradouro,
+        city: data.localidade,
+        state: data.uf,
+        neighborhood: data.bairro,
+      }));
 
       numberRef.current?.focus();
     } catch (err) {
@@ -32,7 +42,19 @@ export default function PersonalSection() {
   };
 
   // Setup handlers
-  const 
+  const handleInputFocus = (name: keyof typeof form) => {
+    setForm((state) => ({
+      ...state,
+      validationError: { ...state.validationError, [name]: false },
+    }));
+  };
+
+  const handleInputChange = (name: keyof typeof form, value: string) => {
+    setForm((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  };
 
   // Setup listeners
   useEffect(() => {
@@ -46,22 +68,37 @@ export default function PersonalSection() {
           placeholder="Nome"
           name="name"
           value={form.name}
-          onChange={(evt) => form.setName(evt.target.value)}
-          className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
+          onFocus={() => handleInputFocus("name")}
+          onChange={(evt) => handleInputChange("name", evt.target.value)}
+          className={classNames({
+            "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
+              true,
+            "border-2 border-red-200": form.validationError.name,
+          })}
         />
         <input
           placeholder="E-mail"
           name="email"
           value={form.email}
-          onChange={(evt) => form.setEmail(evt.target.value)}
-          className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
+          onFocus={() => handleInputFocus("email")}
+          onChange={(evt) => handleInputChange("email", evt.target.value)}
+          className={classNames({
+            "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
+              true,
+            "border-2 border-red-200": form.validationError.email,
+          })}
         />
         <input
           placeholder="Telefone"
           name="phone"
           value={form.phone}
-          onChange={(evt) => form.setPhone(evt.target.value)}
-          className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
+          onFocus={() => handleInputFocus("phone")}
+          onChange={(evt) => handleInputChange("phone", evt.target.value)}
+          className={classNames({
+            "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
+              true,
+            "border-2 border-red-200": form.validationError.phone,
+          })}
         />
       </div>
 
@@ -74,7 +111,8 @@ export default function PersonalSection() {
               placeholder="CEP"
               name="zip"
               value={form.zip}
-              onChange={(evt) => form.setZip(evt.target.value)}
+              onFocus={() => handleInputFocus("zip")}
+              onChange={(evt) => handleInputChange("zip", evt.target.value)}
               className="p-3 bg-transparent border rounded-md outline-none text-gray-800"
             />
             {loadingZip && (
@@ -86,7 +124,8 @@ export default function PersonalSection() {
             placeholder="Cidade"
             name="city"
             value={form.city}
-            onChange={(evt) => form.setCity(evt.target.value)}
+            onFocus={() => handleInputFocus("city")}
+            onChange={(evt) => handleInputChange("city", evt.target.value)}
             disabled={loadingZip}
             className={classNames({
               "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
@@ -101,7 +140,8 @@ export default function PersonalSection() {
             placeholder="Estado"
             name="state"
             value={form.state}
-            onChange={(evt) => form.setState(evt.target.value)}
+            onFocus={() => handleInputFocus("state")}
+            onChange={(evt) => handleInputChange("state", evt.target.value)}
             disabled={loadingZip}
             className={classNames({
               "p-3 bg-transparent border rounded-md outline-none text-gray-800":
@@ -113,7 +153,8 @@ export default function PersonalSection() {
             placeholder="Endereço"
             name="address"
             value={form.address}
-            onChange={(evt) => form.setAddress(evt.target.value)}
+            onFocus={() => handleInputFocus("address")}
+            onChange={(evt) => handleInputChange("address", evt.target.value)}
             disabled={loadingZip}
             className={classNames({
               "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
@@ -128,7 +169,8 @@ export default function PersonalSection() {
             placeholder="Número"
             name="number"
             value={form.number}
-            onChange={(evt) => form.setNumber(evt.target.value)}
+            onFocus={() => handleInputFocus("number")}
+            onChange={(evt) => handleInputChange("number", evt.target.value)}
             ref={numberRef}
             className="p-3 bg-transparent border rounded-md outline-none text-gray-800"
           />
@@ -136,7 +178,10 @@ export default function PersonalSection() {
             placeholder="Complemento"
             name="complement"
             value={form.complement}
-            onChange={(evt) => form.setComplement(evt.target.value)}
+            onFocus={() => handleInputFocus("complement")}
+            onChange={(evt) =>
+              handleInputChange("complement", evt.target.value)
+            }
             className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
           />
         </div>
@@ -145,7 +190,10 @@ export default function PersonalSection() {
           placeholder="Bairro"
           name="neighborhood"
           value={form.neighborhood}
-          onChange={(evt) => form.setNeighborhood(evt.target.value)}
+          onFocus={() => handleInputFocus("neighborhood")}
+          onChange={(evt) =>
+            handleInputChange("neighborhood", evt.target.value)
+          }
           disabled={loadingZip}
           className={classNames({
             "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":

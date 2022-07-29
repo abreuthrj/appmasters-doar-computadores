@@ -1,13 +1,15 @@
 import classNames from "classnames";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { Form } from "../components";
+import { Form, Snackbar } from "../components";
 import FormProvider from "../components/Form/utils/FormProvider";
 import Image from "next/image";
 import { apiFetchStatus } from "../store/api";
+import { useStoreSelector } from "../store/store";
 
 export default function Home() {
   const [alive, setAlive] = useState(false);
+  const { snackbar } = useStoreSelector((state) => state.App);
 
   // Setup listeners
   useEffect(() => {
@@ -41,7 +43,9 @@ export default function Home() {
         <div className="my-6 flex flex-col items-center">
           <span className="block border-b-2 border-blue-400 mb-4 w-32 rounded-full"></span>
 
-          <h1 className="text-3xl font-bold">Doação de computadores</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Doação de computadores
+          </h1>
           <h1 className="text-4xl font-bold text-blue-400 text-right w-full">
             usados
           </h1>
@@ -50,7 +54,7 @@ export default function Home() {
 
       <main className="flex flex-grow justify-center">
         <div className="w-8/12 mx-auto">
-          <p className="mt-4 font-bold text-right">
+          <p className="mt-4 font-bold text-right text-white">
             api{" "}
             <span
               className={classNames({
@@ -66,6 +70,13 @@ export default function Home() {
             <Form />
           </FormProvider>
         </div>
+
+        <Snackbar
+          visible={snackbar.visible}
+          text={snackbar.text}
+          duration={snackbar.duration}
+          type={snackbar.type}
+        />
       </main>
     </div>
   );

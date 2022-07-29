@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import useForm from "../utils/useForm";
 
 export default function DeviceSection() {
-  const form = useForm();
+  const [form, setForm] = useForm();
   const [deviceCount, setDeviceCount] = useState(1);
 
   // Setup handlers
@@ -13,22 +13,26 @@ export default function DeviceSection() {
   ) => {
     const copy = [...form.devices];
     copy[index][key] = value;
-    form.setDevices([...copy]);
+    setForm((form) => ({ ...form, devices: [...copy] }));
   };
 
   // Setup listeners
   useEffect(() => {
     if (deviceCount < form.devices.length)
-      form.setDevices(form.devices.slice(0, deviceCount));
+      setForm((form) => ({
+        ...form,
+        devices: form.devices.slice(0, deviceCount),
+      }));
     else
-      form.setDevices(
-        form.devices.concat([
+      setForm((form) => ({
+        ...form,
+        devices: form.devices.concat([
           {
             type: "notebook",
             condition: "working",
           },
-        ])
-      );
+        ]),
+      }));
   }, [deviceCount]);
 
   return (
