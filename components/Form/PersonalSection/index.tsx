@@ -1,15 +1,18 @@
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  FocusEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+/**
+ * Esta é a seção dos dados do usuário
+ *
+ * Assim que preenchido totalmente o campo do CEP
+ * a api de localização é chamada automaticamente
+ *
+ * Ao submeter o form, os dados estão
+ * sendo enviados com máscara
+ */
+import { useEffect, useRef, useState } from "react";
 import axios from "../../../node_modules/axios/index";
 import classNames from "../../../node_modules/classnames/index";
 import { ZIPRequestResponse } from "../../../store/types";
 import useForm from "../utils/useForm";
+import InputMask from "react-input-mask";
 
 export default function PersonalSection() {
   const [form, setForm] = useForm();
@@ -17,12 +20,13 @@ export default function PersonalSection() {
   const numberRef = useRef(null);
 
   // Setup static functions
-  const fetchCep = async () => {
+  const fetchZip = async (zip: string) => {
+    // Request location info based on unformatted zip
     try {
       setLoadingZip(true);
 
       const { data } = await axios.get<ZIPRequestResponse>(
-        `https://viacep.com.br/ws/${form.zip}/json/`
+        `https://viacep.com.br/ws/${zip}/json/`
       );
 
       setForm((state) => ({
@@ -43,6 +47,7 @@ export default function PersonalSection() {
 
   // Setup handlers
   const handleInputFocus = (name: keyof typeof form) => {
+    // Clear error state when focus
     setForm((state) => ({
       ...state,
       validationError: { ...state.validationError, [name]: false },
@@ -50,6 +55,7 @@ export default function PersonalSection() {
   };
 
   const handleInputChange = (name: keyof typeof form, value: string) => {
+    // Update state when change
     setForm((state) => ({
       ...state,
       [name]: value,
@@ -58,7 +64,8 @@ export default function PersonalSection() {
 
   // Setup listeners
   useEffect(() => {
-    if (form.zip.length == 8) fetchCep();
+    const raw = form.zip.replaceAll(/[^0-9]+/g, "");
+    if (raw.length == 8) fetchZip(raw);
   }, [form.zip]);
 
   return (
@@ -71,9 +78,9 @@ export default function PersonalSection() {
           onFocus={() => handleInputFocus("name")}
           onChange={(evt) => handleInputChange("name", evt.target.value)}
           className={classNames({
-            "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
+            "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1 transition":
               true,
-            "border-2 border-red-200": form.validationError.name,
+            "border-red-400": form.validationError.name,
           })}
         />
         <input
@@ -85,10 +92,13 @@ export default function PersonalSection() {
           className={classNames({
             "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
               true,
-            "border-2 border-red-200": form.validationError.email,
+            "border-red-400": form.validationError.email,
           })}
         />
-        <input
+        <InputMask
+          mask={"(99) 99999-9999"}
+          maskPlaceholder={null}
+          alwaysShowMask={false}
           placeholder="Telefone"
           name="phone"
           value={form.phone}
@@ -97,7 +107,7 @@ export default function PersonalSection() {
           className={classNames({
             "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
               true,
-            "border-2 border-red-200": form.validationError.phone,
+            "border-red-400": form.validationError.phone,
           })}
         />
       </div>
@@ -107,13 +117,18 @@ export default function PersonalSection() {
       <div className="flex flex-wrap gap-2">
         <div className="flex w-full gap-2 flex-wrap">
           <label className="relative flex items-center">
-            <input
+            <InputMask
+              mask={"99999-999"}
               placeholder="CEP"
               name="zip"
               value={form.zip}
               onFocus={() => handleInputFocus("zip")}
               onChange={(evt) => handleInputChange("zip", evt.target.value)}
-              className="p-3 bg-transparent border rounded-md outline-none text-gray-800"
+              className={classNames({
+                "p-3 bg-transparent border rounded-md outline-none text-gray-800":
+                  true,
+                "border-red-400": form.validationError.zip,
+              })}
             />
             {loadingZip && (
               <span className="absolute right-0 m-4 animate-spin border-2 w-6 h-6 rounded-full border-t-gray-500"></span>
@@ -131,6 +146,7 @@ export default function PersonalSection() {
               "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
                 true,
               "bg-gray-100": loadingZip,
+              "border-red-400": form.validationError.city,
             })}
           />
         </div>
@@ -147,6 +163,7 @@ export default function PersonalSection() {
               "p-3 bg-transparent border rounded-md outline-none text-gray-800":
                 true,
               "bg-gray-100": loadingZip,
+              "border-red-400": form.validationError.state,
             })}
           />
           <input
@@ -160,6 +177,7 @@ export default function PersonalSection() {
               "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
                 true,
               "bg-gray-100": loadingZip,
+              "border-red-400": form.validationError.address,
             })}
           />
         </div>
@@ -172,7 +190,11 @@ export default function PersonalSection() {
             onFocus={() => handleInputFocus("number")}
             onChange={(evt) => handleInputChange("number", evt.target.value)}
             ref={numberRef}
-            className="p-3 bg-transparent border rounded-md outline-none text-gray-800"
+            className={classNames({
+              "p-3 bg-transparent border rounded-md outline-none text-gray-800":
+                true,
+              "border-red-400": form.validationError.number,
+            })}
           />
           <input
             placeholder="Complemento"
@@ -182,7 +204,11 @@ export default function PersonalSection() {
             onChange={(evt) =>
               handleInputChange("complement", evt.target.value)
             }
-            className="p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1"
+            className={classNames({
+              "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
+                true,
+              "border-red-400": form.validationError.complement,
+            })}
           />
         </div>
 
@@ -199,6 +225,7 @@ export default function PersonalSection() {
             "p-3 bg-transparent border rounded-md outline-none text-gray-800 flex-1":
               true,
             "bg-gray-100": loadingZip,
+            "border-red-400": form.validationError.neighborhood,
           })}
         />
       </div>

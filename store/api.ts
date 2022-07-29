@@ -1,3 +1,6 @@
+/**
+ * Define as chamadas da API
+ */
 import axios from "axios";
 import {
   ApiStatusResponseType,

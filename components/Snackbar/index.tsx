@@ -1,3 +1,11 @@
+/**
+ * Aqui você vai encontrar o snackbar responsável
+ * pelo feedback do usuário
+ *
+ * Ele está sendo renderizado na pagina principal
+ * e conta com o redux para que suas informações
+ * sejam modificadas de qualquer lugar da aplicação
+ */
 import classNames from "classnames";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -19,7 +27,9 @@ export default function Snackbar({
   const timer = useRef(null);
   const dispatch = useDispatch();
 
+  // Setup listeners
   useEffect(() => {
+    // Setup auto-hiding behaviour
     if (visible) {
       timer.current = setTimeout(() => {
         dispatch(hideSnackAction());
@@ -32,6 +42,8 @@ export default function Snackbar({
   }, [visible, duration]);
 
   useEffect(() => {
+    // If multiple snacks are triggered before
+    // the actual is hidden, the time is reseted
     if (timer.current) clearTimeout(timer.current);
 
     timer.current = setTimeout(() => {

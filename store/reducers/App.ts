@@ -1,3 +1,9 @@
+/**
+ * Cria o reducer da aplicação e as ações para
+ * sua devida manipulação
+ *
+ * O tipo da snackbar é reaproveitado
+ */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SnackbarProps } from "../../components/Snackbar";
 

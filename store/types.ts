@@ -1,3 +1,7 @@
+/**
+ * Define os tipos referentes as requisições e
+ * respostas das APIs
+ */
 export type ApiStatusResponseType = {
   alive: boolean;
 };

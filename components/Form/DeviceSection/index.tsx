@@ -1,9 +1,15 @@
-import { Fragment, useEffect, useState } from "react";
+/**
+ * Esta é a seção do dispositivo e conta
+ * com um input de quantidade
+ *
+ * Lista os dispositivos com base no array
+ * do form context
+ */
+import { Fragment } from "react";
 import useForm from "../utils/useForm";
 
 export default function DeviceSection() {
   const [form, setForm] = useForm();
-  const [deviceCount, setDeviceCount] = useState(1);
 
   // Setup handlers
   const handleChangeDeviceType = (
@@ -11,19 +17,23 @@ export default function DeviceSection() {
     key: string,
     value: string
   ) => {
+    // Generate a devices copy, change it's key value
+    // and update it
     const copy = [...form.devices];
     copy[index][key] = value;
     setForm((form) => ({ ...form, devices: [...copy] }));
   };
 
-  // Setup listeners
-  useEffect(() => {
-    if (deviceCount < form.devices.length)
+  const handleDeviceCountChange = (value: number) => {
+    // Remove from array if decreased count
+    if (value < form.devices.length) {
       setForm((form) => ({
         ...form,
-        devices: form.devices.slice(0, deviceCount),
+        devices: form.devices.slice(0, value),
       }));
-    else
+    }
+    // Push new device if increased count
+    else if (value > form.devices.length) {
       setForm((form) => ({
         ...form,
         devices: form.devices.concat([
@@ -33,7 +43,8 @@ export default function DeviceSection() {
           },
         ]),
       }));
-  }, [deviceCount]);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -43,7 +54,8 @@ export default function DeviceSection() {
           placeholder="Equipamentos"
           type="number"
           min={1}
-          onChange={(evt) => setDeviceCount(evt.target.valueAsNumber)}
+          value={form.devices.length}
+          onChange={(evt) => handleDeviceCountChange(evt.target.valueAsNumber)}
           className="p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full"
         />
       </label>
@@ -118,7 +130,7 @@ export default function DeviceSection() {
             </label>
           </div>
 
-          {i < deviceCount - 1 && (
+          {i < form.devices.length - 1 && (
             <span className="block border-b my-6 border-gray-100 w-full"></span>
           )}
         </Fragment>
