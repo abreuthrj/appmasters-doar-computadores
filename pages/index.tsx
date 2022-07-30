@@ -36,9 +36,9 @@ export default function Home() {
       </Head>
 
       <header className="flex flex-wrap justify-center">
-        <div className="w-full bg-white flex items-center justify-center mb-14 pt-1">
+        {/* <div className="w-full bg-white flex items-center justify-center mb-14 pt-1">
           <Image src={require("../assets/logo.png")} width={48} height={48} />
-        </div>
+        </div> */}
 
         <div className="my-6 flex flex-col items-center">
           <span className="block border-b-2 border-blue-400 mb-4 w-32 rounded-full"></span>
@@ -52,8 +52,8 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex flex-grow justify-center">
-        <div className="w-8/12 mx-auto">
+      <main className="flex flex-grow justify-center py-10">
+        <div className="xl:w-[800px] md:w-8/12 sm:w-12/12 mx-auto">
           <p className="mt-4 font-bold text-right text-white">
             api{" "}
             <span

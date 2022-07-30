@@ -97,7 +97,6 @@ export default function PersonalSection() {
         />
         <InputMask
           mask={"(99) 99999-9999"}
-          maskPlaceholder={null}
           alwaysShowMask={false}
           placeholder="Telefone"
           name="phone"
