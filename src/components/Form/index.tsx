@@ -42,6 +42,13 @@ export default function Form(props: FormProps) {
         validationError: { ...state.validationError, name: true },
       }));
 
+      dispatch(
+        showSnackAction({
+          text: "Nome inválido",
+          type: "error",
+        })
+      );
+
       return false;
     }
 
@@ -51,6 +58,13 @@ export default function Form(props: FormProps) {
         ...state,
         validationError: { ...state.validationError, email: true },
       }));
+
+      dispatch(
+        showSnackAction({
+          text: "Email inválido",
+          type: "error",
+        })
+      );
 
       return false;
     }
@@ -62,6 +76,13 @@ export default function Form(props: FormProps) {
         validationError: { ...state.validationError, phone: true },
       }));
 
+      dispatch(
+        showSnackAction({
+          text: "Telefone inválido",
+          type: "error",
+        })
+      );
+
       return false;
     }
 
@@ -71,6 +92,13 @@ export default function Form(props: FormProps) {
         ...state,
         validationError: { ...state.validationError, zip: true },
       }));
+
+      dispatch(
+        showSnackAction({
+          text: "CEP inválido",
+          type: "error",
+        })
+      );
 
       return false;
     }
@@ -82,6 +110,21 @@ export default function Form(props: FormProps) {
           ...state,
           validationError: { ...state.validationError, [required]: true },
         }));
+
+        dispatch(
+          showSnackAction({
+            text: `${
+              {
+                city: "Cidade",
+                state: "Estado",
+                address: "Endereço",
+                number: "Número",
+                neighborhood: "Bairro",
+              }[required]
+            } inválido`,
+            type: "error",
+          })
+        );
 
         return false;
       }
