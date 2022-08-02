@@ -158,7 +158,7 @@ export default function Form(props: FormProps) {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} className="bg-white p-8 rounded-md">
+    <form onSubmit={handleFormSubmit} className="bg-white p-8 md:rounded-md">
       <div
         className={classNames({
           "flex flex-col gap-2": true,

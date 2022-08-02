@@ -52,9 +52,9 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex flex-grow justify-center py-10">
-        <div className="xl:w-[800px] md:w-8/12 sm:w-12/12 mx-auto">
-          <p className="mt-4 font-bold text-right text-white">
+      <main className="flex flex-grow justify-center md:py-10">
+        <div className="xl:w-[800px] md:w-8/12 w-12/12 mx-auto">
+          <p className="mt-4 font-bold text-right text-white px-4 md:px-0">
             api{" "}
             <span
               className={classNames({

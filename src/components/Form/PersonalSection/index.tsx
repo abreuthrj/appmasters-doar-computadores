@@ -8,8 +8,8 @@
  * sendo enviados com máscara
  */
 import { useEffect, useRef, useState } from "react";
-import axios from "../../../node_modules/axios/index";
-import classNames from "../../../node_modules/classnames/index";
+import axios from "axios";
+import classNames from "classnames";
 import { ZIPRequestResponse } from "../../../store/types";
 import useForm from "../utils/useForm";
 import InputMask from "react-input-mask";
@@ -115,7 +115,7 @@ export default function PersonalSection() {
 
       <div className="flex flex-wrap gap-2">
         <div className="flex w-full gap-2 flex-wrap">
-          <label className="relative flex items-center">
+          <label className="relative flex w-full lg:w-auto items-center">
             <InputMask
               mask={"99999-999"}
               placeholder="CEP"
@@ -124,7 +124,7 @@ export default function PersonalSection() {
               onFocus={() => handleInputFocus("zip")}
               onChange={(evt) => handleInputChange("zip", evt.target.value)}
               className={classNames({
-                "p-3 bg-transparent border rounded-md outline-none text-gray-800":
+                "p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full lg:w-auto":
                   true,
                 "border-red-400": form.validationError.zip,
               })}
@@ -159,7 +159,7 @@ export default function PersonalSection() {
             onChange={(evt) => handleInputChange("state", evt.target.value)}
             disabled={loadingZip}
             className={classNames({
-              "p-3 bg-transparent border rounded-md outline-none text-gray-800":
+              "p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full lg:w-auto":
                 true,
               "bg-gray-100": loadingZip,
               "border-red-400": form.validationError.state,
@@ -190,7 +190,7 @@ export default function PersonalSection() {
             onChange={(evt) => handleInputChange("number", evt.target.value)}
             ref={numberRef}
             className={classNames({
-              "p-3 bg-transparent border rounded-md outline-none text-gray-800":
+              "p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full lg:w-auto":
                 true,
               "border-red-400": form.validationError.number,
             })}
