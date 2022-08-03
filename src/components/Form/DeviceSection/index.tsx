@@ -73,7 +73,7 @@ export default function DeviceSection() {
             onChange={(evt) =>
               handleChangeDeviceType(i, "type", evt.target.value)
             }
-            className="p-3 bg-transparent border rounded-md outline-none text-gray-800"
+            className="p-3 bg-transparent border rounded-md outline-none text-gray-800 w-full"
           >
             <option value="notebook">Notebook</option>
             <option value="desktop">Desktop</option>
@@ -83,7 +83,7 @@ export default function DeviceSection() {
             <option value="scanner">Scanner</option>
           </select>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 ">
             <label>
               <input
                 type="radio"
