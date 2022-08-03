@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <React.Fragment>
-      <div className="flex lg:flex-nowrap flex-wrap h-full lg:px-12 px-2 gap-32 items-stretch py-20 lg:py-0 2xl:px-40">
+      <div className="flex flex-wrap h-full gap-32 items-stretch py-20 px-2 lg:px-12 lg:py-0 lg:flex-nowrap 2xl:px-40">
         <Head>
           <title>Doação de Computadores</title>
           <meta name="description" content="Doação de computadores usados" />
