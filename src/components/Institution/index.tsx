@@ -10,7 +10,7 @@ export default function Institution({
     <div className="mt-40 text-white">
       <div className="flex flex-wrap items-end justify-start mb-8 xl:justify-between">
         <h1 className="text-4xl font-bold">{name}</h1>
-        <span className="text-neutral-300">{address}</span>
+        <span className="text-neutral-300 w-full xl:w-auto">{address}</span>
       </div>
 
       <p className="mb-24">{description}</p>
