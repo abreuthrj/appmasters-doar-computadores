@@ -22,6 +22,7 @@ export default function Institution({
             <li key={`media-${i}`} className="mb-4 xl:mb-0">
               <a
                 href={media.url}
+                rel="noreferrer"
                 target="_blank"
                 className="text-blue-400 p-2 font-bold text-sm"
               >
