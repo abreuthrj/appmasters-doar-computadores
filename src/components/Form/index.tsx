@@ -104,7 +104,7 @@ export default function Form(props: FormProps) {
       state: form.state,
       streetAddress: form.address,
       number: form.number,
-      complement: form.complement,
+      complement: form.complement || null,
       neighborhood: form.neighborhood,
       deviceCount: form.devices.length,
       devices: form.devices,
