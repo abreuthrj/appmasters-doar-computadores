@@ -52,7 +52,7 @@ export default function Home() {
           </div>
 
           <div>
-            <p className="text-xl text-center xl:text-left">
+            <p className="text-xl text-center text-white xl:text-left">
               Os dispositivos doados serão encaminhado para as instituições
               parceiras listadas mais adiante na página e farão a diferença em
               muitas vidas
