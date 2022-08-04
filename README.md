@@ -49,6 +49,7 @@ https://appmasters-doar-computadores.vercel.app/)
     "next": "12.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.4.0",
     "react-input-mask": "^2.0.4",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0"
