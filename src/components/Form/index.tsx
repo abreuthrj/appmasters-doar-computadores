@@ -35,92 +35,45 @@ export default function Form(props: FormProps) {
 
   // Setup handlers
   const handleFormValidation = (): boolean => {
-    // Validate name field
-    if (!form.name) {
-      setForm((state) => ({
-        ...state,
-        validationError: { ...state.validationError, name: true },
-      }));
+    type ValidatorType = {
+      [k in keyof typeof form]: () => boolean;
+    };
 
-      dispatch(
-        showSnackAction({
-          text: "Nome inválido",
-          type: "error",
-        })
-      );
+    // Define validation functions
+    const validateFunctions: Partial<ValidatorType> = {
+      name: () => !!form.name,
+      email: () => !!form.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g),
+      phone: () => !!form.phone.match(/\([0-9]{2}\)\ [0-9]{5}\-[0-9]{4}/g),
+      zip: () => !!form.zip.match(/[0-9]{5}\-[0-9]{3}/g),
+      city: () => !!form.city,
+      state: () => !!form.state,
+      address: () => !!form.address,
+      number: () => !!form.number,
+      neighborhood: () => !!form.neighborhood,
+    };
 
-      return false;
-    }
-
-    // Validate email field
-    if (!form.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-      setForm((state) => ({
-        ...state,
-        validationError: { ...state.validationError, email: true },
-      }));
-
-      dispatch(
-        showSnackAction({
-          text: "Email inválido",
-          type: "error",
-        })
-      );
-
-      return false;
-    }
-
-    // Validate phone field
-    if (!form.phone.match(/\([0-9]{2}\)\ [0-9]{5}\-[0-9]{4}/g)) {
-      setForm((state) => ({
-        ...state,
-        validationError: { ...state.validationError, phone: true },
-      }));
-
-      dispatch(
-        showSnackAction({
-          text: "Telefone inválido",
-          type: "error",
-        })
-      );
-
-      return false;
-    }
-
-    // Validate zip field
-    if (!form.zip.match(/[0-9]{5}\-[0-9]{3}/g)) {
-      setForm((state) => ({
-        ...state,
-        validationError: { ...state.validationError, zip: true },
-      }));
-
-      dispatch(
-        showSnackAction({
-          text: "CEP inválido",
-          type: "error",
-        })
-      );
-
-      return false;
-    }
-
-    // Validate non-empty fields
-    for (let required of ["city", "state", "address", "neighborhood", "number"])
-      if (!form[required as keyof typeof form]) {
+    // Run validation for each validation function
+    for (let field of Object.keys(validateFunctions))
+      if (!validateFunctions[field]()) {
         setForm((state) => ({
           ...state,
-          validationError: { ...state.validationError, [required]: true },
+          validationError: { ...state.validationError, [field]: true },
         }));
 
         dispatch(
           showSnackAction({
             text: `${
               {
+                name: "Nome",
+                email: "Email",
+                phone: "Telefone",
+                zip: "CEP",
                 city: "Cidade",
                 state: "Estado",
                 address: "Endereço",
                 number: "Número",
                 neighborhood: "Bairro",
-              }[required]
+              }[field]
             } inválido`,
             type: "error",
           })
