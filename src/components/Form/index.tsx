@@ -42,7 +42,6 @@ export default function Form(props: FormProps) {
     // Define validation functions
     const validateFunctions: Partial<ValidatorType> = {
       name: () => !!form.name,
-      email: () => !!form.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g),
       phone: () => !!form.phone.match(/\([0-9]{2}\)\ [0-9]{5}\-[0-9]{4}/g),
       zip: () => !!form.zip.match(/[0-9]{5}\-[0-9]{3}/g),
       city: () => !!form.city,
@@ -65,7 +64,6 @@ export default function Form(props: FormProps) {
             text: `${
               {
                 name: "Nome",
-                email: "Email",
                 phone: "Telefone",
                 zip: "CEP",
                 city: "Cidade",
@@ -97,7 +95,7 @@ export default function Form(props: FormProps) {
     // Mount api body
     const apiBody = {
       name: form.name,
-      email: form.email,
+      email: form.email || null,
       phone: form.phone,
       zip: form.zip,
       city: form.city,
@@ -134,9 +132,7 @@ export default function Form(props: FormProps) {
       if (err.response?.status == 400)
         dispatch(
           showSnackAction({
-            text: `Ocorreu um problema! ${
-              err.response.data.errorMessage
-            }: ${err.response.data.requiredFields.join(", ")}`,
+            text: `Ocorreu um problema! ${err.response.data.errorMessage}`,
             type: "error",
           })
         );

@@ -49,13 +49,13 @@ export default function Snackbar({
     timer.current = setTimeout(() => {
       dispatch(hideSnackAction());
     }, duration);
-  }, [text]);
+  }, [text, duration]);
 
   return (
     <div className="fixed bottom-0 w-full flex items-center justify-center pointer-events-none">
       <div
         className={classNames({
-          "text-black mx-auto p-2 mb-4 rounded-md shadow-md transition-all pointer-events-auto":
+          "text-neutral-800 mx-auto py-2 px-4 mb-4 rounded-md shadow-md transition-all pointer-events-auto":
             true,
           "translate-y-10 opacity-0 scale-50": !visible,
           "translate-y-0 opacity-100 scale-100": visible,
