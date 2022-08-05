@@ -8,26 +8,35 @@ https://appmasters-doar-computadores.vercel.app/)
 
 ### Ferramentas
 <table>
-<tr>
-<td>Framework</td>
-<td>NextJS</td>
-</tr>
-<tr>
-<td>Typescript</td>
-<td>Sim</td>
-</tr>
-<tr>
-<td>CSS Framework</td>
-<td>Tailwind</td>
-</tr>
-<tr>
-<td>API Client</td>
-<td>Axios</td>
-</tr>
-<tr>
-<td>Deployment</td>
-<td>Vercel</td>
-</tr>
+  <tr>
+    <td>Framework</td>
+    <td>NextJS</td>
+  </tr>
+  <tr>
+    <td>Typescript</td>
+    <td>Sim</td>
+  </tr>
+  <tr>
+    <td>CSS Framework</td>
+    <td>Tailwind</td>
+  </tr>
+  <tr>
+    <td>API Client</td>
+    <td>Axios</td>
+  </tr>
+  <tr>
+    <td>Deployment</td>
+    <td>Vercel</td>
+  </tr>
+</table>
+
+### Variáveis de ambiente
+O projeto conta com variáveis de ambiente para o funcionamento devido, as mesmas podem ser configuradas a partir do exemplo em **.env.example**
+<table>
+  <tr>
+    <td>NEXT_PUBLIC_API_BASEURL</td>
+    <td>BaseURL da API</td>
+  </tr>
 </table>
 
 ## Package.json
