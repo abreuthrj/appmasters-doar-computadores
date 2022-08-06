@@ -1,4 +1,4 @@
-# AppMasters - Doação de Computadores
+Processo Seletivo para estágio na AppMasters - Doação de Computadores
 
 ### Resumo
 Este projeto serve exclusivamente ao propósito do processo seletivo da AppMasters e seus desfechos. 
