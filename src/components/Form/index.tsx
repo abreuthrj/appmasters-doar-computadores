@@ -163,6 +163,7 @@ export default function Form() {
       <div className="flex items-center justify-center gap-4 mb-6 -mt-8">
         {[1, 2, 3].map((i) => (
           <span
+            key={`step-dot=${i}`}
             className={classNames({
               "block w-3 h-3 rounded-full transition-colors": true,
               "bg-blue-500": step == i,
