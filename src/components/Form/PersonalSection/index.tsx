@@ -86,6 +86,7 @@ export default function PersonalSection() {
         <input
           placeholder="E-mail"
           name="email"
+          type="email"
           value={form.email}
           onFocus={() => handleInputFocus("email")}
           onChange={(evt) => handleInputChange("email", evt.target.value)}
@@ -100,6 +101,7 @@ export default function PersonalSection() {
           alwaysShowMask={false}
           placeholder="Telefone"
           name="phone"
+          type="tel"
           value={form.phone}
           onFocus={() => handleInputFocus("phone")}
           onChange={(evt) => handleInputChange("phone", evt.target.value)}
