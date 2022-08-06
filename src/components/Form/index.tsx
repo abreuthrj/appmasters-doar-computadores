@@ -24,13 +24,13 @@ import classNames from "classnames";
 import { apiPostForm } from "../../store/api";
 import { showSnackAction } from "../../store/reducers/App";
 import { useStoreDispatch } from "../../store/store";
+import FeedbackSection from "./FeedbackSection";
 
-export type FormProps = {};
-
-export default function Form(props: FormProps) {
+export default function Form() {
   const [form, setForm, resetForm] = useForm();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [fading, setFading] = useState(false);
   const dispatch = useStoreDispatch();
 
   // Setup handlers
@@ -83,12 +83,21 @@ export default function Form(props: FormProps) {
     return true;
   };
 
+  const handleStepChange = (step: number) => {
+    setFading(true);
+
+    setTimeout(() => {
+      setStep(step);
+      setFading(false);
+    }, 300);
+  };
+
   const handleFormSubmit: FormEventHandler = async (evt) => {
     evt.preventDefault();
 
     // Handle validation and change step
-    if (step < 2) {
-      if (handleFormValidation()) setStep(step + 1);
+    if (step == 1) {
+      if (handleFormValidation()) handleStepChange(2);
       return;
     }
 
@@ -116,15 +125,8 @@ export default function Form(props: FormProps) {
       const { data } = await apiPostForm(apiBody);
       console.log(data);
 
-      dispatch(
-        showSnackAction({
-          text: "Formulário enviado com sucesso!",
-        })
-      );
-
       // Go back to main step and empty form
-      setStep(1);
-      resetForm();
+      handleStepChange(3);
     } catch (err) {
       console.log(err);
 
@@ -149,47 +151,63 @@ export default function Form(props: FormProps) {
     }
   };
 
+  const handleBackButtonPress = () => {
+    handleStepChange(1);
+  };
+
   return (
     <form
       onSubmit={handleFormSubmit}
       className="bg-white xl:px-16 py-16 px-4 md:rounded-md lg:max-h-[680px] max-h-max lg:overflow-y-auto overflow-y-hidden"
     >
-      <div
-        className={classNames({
-          "flex flex-col gap-2": true,
-          hidden: step == 2,
-        })}
-      >
-        <PersonalSection />
+      <div className="flex items-center justify-center gap-4 mb-6 -mt-8">
+        {[1, 2, 3].map((i) => (
+          <span
+            className={classNames({
+              "block w-3 h-3 rounded-full transition-colors": true,
+              "bg-blue-500": step == i,
+              "bg-gray-200": step !== i,
+            })}
+          ></span>
+        ))}
       </div>
 
       <div
         className={classNames({
-          "flex flex-col gap-2": true,
-          hidden: step == 1,
+          "flex flex-col gap-2 transition-all": true,
+          "opacity-100": !fading,
+          "opacity-0": fading,
         })}
       >
-        <DeviceSection />
+        {step == 1 ? (
+          <PersonalSection />
+        ) : step == 2 ? (
+          <DeviceSection />
+        ) : (
+          <FeedbackSection />
+        )}
       </div>
 
       <div className="flex flex-col mt-5 gap-2">
-        <input
-          type="submit"
-          value={loading ? "Carregando" : step == 1 ? "Seguir" : "Confirmar"}
-          disabled={loading}
-          onClick={handleFormSubmit}
-          className={classNames({
-            "bg-blue-500 text-white p-2 rounded-md cursor-pointer active:bg-blue-600 outline-none":
-              true,
-            "bg-blue-200": loading,
-          })}
-        />
-        {step > 1 && (
+        {step < 3 && (
+          <input
+            type="submit"
+            value={loading ? "Carregando" : step == 1 ? "Seguir" : "Confirmar"}
+            disabled={loading}
+            onClick={handleFormSubmit}
+            className={classNames({
+              "bg-blue-500 text-white p-2 rounded-md cursor-pointer active:bg-blue-600 outline-none":
+                true,
+              "bg-blue-200": loading,
+            })}
+          />
+        )}
+        {step == 2 && (
           <input
             type="button"
             value="Voltar"
             disabled={loading}
-            onClick={() => setStep(step - 1)}
+            onClick={handleBackButtonPress}
             className="bg-gray-200 text-gray-800 p-2 rounded-md cursor-pointer active:bg-gray-300 outline-none"
           />
         )}
