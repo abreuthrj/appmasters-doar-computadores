@@ -1,12 +1,19 @@
 # Processo Seletivo para estágio na AppMasters - Doação de Computadores
+## Sumário
+1. [Resumo](#resumo)
+  - [Ferramentas](#ferramentas)
+  - [Variáveis de Ambiente](#variáveis-de-ambiente)
+2. [Screenshots](#screenshots)
+3. [Package.json](#packagejson)
 
-### Resumo
-Este projeto serve exclusivamente ao propósito do processo seletivo da AppMasters e seus desfechos. 
+## Resumo
+Este projeto serve exclusivamente ao propósito do processo seletivo da AppMasters e seus desfechos.
 
 Para ver como ficou, [visite a página do app.](
 https://appmasters-doar-computadores.vercel.app/)
 
 ### Ferramentas
+Confira abaixo as principais ferramentas e frameworks utilizados para a construção do projeto 
 <table>
   <tr>
     <td>Framework</td>
@@ -27,6 +34,10 @@ https://appmasters-doar-computadores.vercel.app/)
   <tr>
     <td>Deployment</td>
     <td>Vercel</td>
+  </tr>
+  <tr>
+    <td>Layout</td>
+    <td>Figma</td>
   </tr>
 </table>
 
