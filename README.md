@@ -1,8 +1,8 @@
 # Processo Seletivo para estágio na AppMasters - Doação de Computadores
 ## Sumário
 1. [Resumo](#resumo)
-  - [Ferramentas](#ferramentas)
-  - [Variáveis de Ambiente](#variáveis-de-ambiente)
+   - [Ferramentas](#ferramentas)
+   - [Variáveis de Ambiente](#variáveis-de-ambiente)
 2. [Screenshots](#screenshots)
 3. [Package.json](#packagejson)
 
