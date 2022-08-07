@@ -1,15 +1,10 @@
-Processo Seletivo para estágio na AppMasters - Doação de Computadores
+# Processo Seletivo para estágio na AppMasters - Doação de Computadores
 
 ### Resumo
 Este projeto serve exclusivamente ao propósito do processo seletivo da AppMasters e seus desfechos. 
 
-[Visite a página do app.](
+Para ver como ficou, [visite a página do app.](
 https://appmasters-doar-computadores.vercel.app/)
-
-![Preview01](./screenshots/interface_form_main.png)
-![Preview02](./screenshots/interface_form_devices.png)
-![Preview03](./screenshots/interface_form_success.png)
-![Preview04](./screenshots/interface_institutions.png)
 
 ### Ferramentas
 <table>
@@ -43,6 +38,12 @@ O projeto conta com variáveis de ambiente para o funcionamento devido, as mesma
     <td>BaseURL da API</td>
   </tr>
 </table>
+
+## Screenshots
+![Preview01](./screenshots/interface_form_main.png)
+![Preview02](./screenshots/interface_form_devices.png)
+![Preview03](./screenshots/interface_form_success.png)
+![Preview04](./screenshots/interface_institutions.png)
 
 ## Package.json
 ```
