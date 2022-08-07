@@ -3,8 +3,13 @@ Processo Seletivo para estágio na AppMasters - Doação de Computadores
 ### Resumo
 Este projeto serve exclusivamente ao propósito do processo seletivo da AppMasters e seus desfechos. 
 
-Para ver como ficou, [visite a página do app.](
+[Visite a página do app.](
 https://appmasters-doar-computadores.vercel.app/)
+
+![Preview01](./screenshots/interface_form_main.png)
+![Preview02](./screenshots/interface_form_devices.png)
+![Preview03](./screenshots/interface_form_success.png)
+![Preview04](./screenshots/interface_institutions.png)
 
 ### Ferramentas
 <table>
